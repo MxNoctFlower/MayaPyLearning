@@ -61,10 +61,11 @@ class GearWindow(Window):
 
         col = cmds.columnLayout()
         cmds.text(label = "Slide to adjust the gear.")
-        self.tag = cmds.text(label = "10")
 
-        row = cmds.rowLayout(numberOfColumns = 3)
-        self.scale = cmds.intSlider(min = 5, max = 30, value = 15, step = 1, dragCommand = self.UpdateGear)
+        row = cmds.rowLayout(numberOfColumns = 4)
+        cmds.text(label="Teeth:")
+        #Creating a box to enter the number of teeth
+        self.scale = cmds.intField( changeCommand = self.UpdateGear)
         #Button will create a gear
         cmds.button(label = "Make Gear", command = self.SpawnGear)
         cmds.button(label = "Reset", command = self.reset)
@@ -76,11 +77,11 @@ class GearWindow(Window):
     def UpdateGear(self, teeth):
         if self.gear:
             self.gear.ModifyTeeth(teeth=teeth)
-        cmds.text(self.tag, edit = True, label = teeth)
+        #cmds.text(self.tag, edit = True, label = teeth)
 
     #Connecting to the "makeGear" function in the Gear class
     def SpawnGear(self, *args):
-        teeth = cmds.intSlider(self.scale, query=True, value=True)
+        teeth = cmds.intField(self.scale, query=True, value=True)
 
         self.gear = Gear()
         self.gear.makeGear(teeth=teeth)
@@ -88,7 +89,6 @@ class GearWindow(Window):
     #Resetting the slider and the text
     def reset(self, *args):
         self.gear = None
-        cmds.intSlider(self.scale, edit = True, value = 15)
-        cmds.text(self.tag, edit = True, label = "15")
+        cmds.intField(self.scale, edit = True, value = 0)
 
 
