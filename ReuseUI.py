@@ -77,8 +77,7 @@ class GearWindow(Window):
     def UpdateGear(self, teeth):
         if self.gear:
             self.gear.ModifyTeeth(teeth=teeth)
-        #cmds.text(self.tag, edit = True, label = teeth)
-
+        
     #Connecting to the "makeGear" function in the Gear class
     def SpawnGear(self, *args):
         teeth = cmds.intField(self.scale, query=True, value=True)
